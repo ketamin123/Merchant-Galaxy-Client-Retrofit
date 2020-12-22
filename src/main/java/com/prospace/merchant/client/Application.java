@@ -78,14 +78,16 @@ public class Application {
 		System.out.println(">Format: how many Credits is I V ? , how many Credits is glob prok ? , how many Credits is glob prok Silver ?");
 		System.out.println(">Input 'Done' to finish (case sensitive)");
 		List<String> questions = new ArrayList<>();
-		do {
+		while (true) {
 			tempReader = reader.readLine();
 			if (tempReader.isEmpty()) {
 				System.out.println("Input is empty, please input a question.");
+			} else if (tempReader.equals("Done")) {
+				break;
 			} else {
 				questions.add(tempReader);
 			}
-		} while (!tempReader.equals("Done"));
+		}
 
 		// Finalising the input
 		System.out.println(">Input finished");
