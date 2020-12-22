@@ -5,7 +5,7 @@
 	<groupId>com.prospace.merchant</groupId>
 	<artifactId>Merchant-Galaxy-Currency-Converter-Client</artifactId>
 	<packaging>jar</packaging>
-    <version>1.2.0</version>
+    <version>1.0.0</version>
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit -->
@@ -34,6 +34,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<source>11</source>
+					<target>11</target>
 					<includes>
 						<include>libs/*.jar</include>
 					</includes>
@@ -56,13 +58,26 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
-				</configuration>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>unpack</id>
+						<phase>package</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<version>${project.version}</version>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
-
 </project>

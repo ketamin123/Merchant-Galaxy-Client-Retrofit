@@ -47,10 +47,17 @@ public class Application {
 		System.out.println(">Leave blank to use default");
 		final String[] romanCharacters = { "I", "V", "X", "L", "C", "D", "M" };
 		List<String> romanSymbols = new ArrayList<>();
-		for (int i = 0; i < romanCharacters.length; i++) {
+		int i = 0;
+		do {
 			System.out.print(romanCharacters[i] + " = ");
-			romanSymbols.add(reader.readLine());
-		}
+			tempReader = reader.readLine();
+			if (tempReader.matches(".*\\d.*")) {
+				System.out.println("Roman symbol contain number(s).");
+			} else {
+				romanSymbols.add(tempReader);
+				i++;
+			}
+		} while (romanSymbols.size() != romanCharacters.length);
 
 		// Assign the three currencies (iron, silver, and gold)
 		System.out.println(">Please input currency values (iron, silver, and gold)");
@@ -82,7 +89,6 @@ public class Application {
 
 		// Finalising the input
 		System.out.println(">Input finished");
-		System.out.println(">Answers:");
 		reader.close();
 
 		// Declaring the request for HTTP call to the API
@@ -103,9 +109,11 @@ public class Application {
 		Response<ResponseEntity> responseCall = retrofitCall.clone().execute();
 		final ResponseEntity convertGalaxyCurrencyResponse = Optional.ofNullable(responseCall.body()).orElse(new ResponseEntity());
 		if (responseCall.code() == 200) {
+			System.out.println(">Answers:");
 			convertGalaxyCurrencyResponse.getBody().forEach(System.out::println);
 		} else {
-			System.out.println(responseCall.message());
+			System.err.println("Error:");
+			System.err.println(responseCall.errorBody().string());
 		}
 	}
 }
